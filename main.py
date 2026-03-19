@@ -90,9 +90,11 @@ def main():
                 current_gesture = face_gesture
                 execute_command(face_gesture)
             elif hand_gesture is not None:
-                print(f"[HAND] detected: {hand_gesture}")
                 current_gesture = hand_gesture
-                execute_command(hand_gesture)
+
+                if hand_gesture != "index_mouse":
+                   print(f"[HAND] detected: {hand_gesture}")
+                   execute_command(hand_gesture)
 
         frame = draw_overlay(frame, gesture_mode, current_gesture)
         cv2.imshow("Gesture Control System", frame)
