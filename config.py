@@ -40,6 +40,11 @@ QUIT_KEY = ord('q')     # press Q to exit the program
 # ── Gesture → OS command mapping
 # Keys must match the strings returned by detect_head_gesture()
 # and detect_hand_gesture() exactly.
+
+
+# Hand pose hold frames
+HOLD_REQUIRED = 8
+
 GESTURE_COMMANDS = {
     # ── Head gestures
     # next window (Alt+Tab)
