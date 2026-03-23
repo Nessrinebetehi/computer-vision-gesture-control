@@ -107,11 +107,24 @@ def detect_hand_gesture(frame):
 
     fingers = fingers_up(pts)
 
-    # 🎯 MOUSE CONTROL (index only)
+   # 🎯 MOUSE CONTROL (index only)
     if fingers == [0, 1, 0, 0, 0]:
-        x = int(pts[8][0] * screen_w)
-        y = int(pts[8][1] * screen_h)
 
+        # 🔥 ACTIVE REGION (important)
+        margin = 0.15
+
+        x_norm = (pts[8][0] - margin) / (1 - 2 * margin)
+        y_norm = (pts[8][1] - margin) / (1 - 2 * margin)
+
+        # clamp
+        x_norm = max(0, min(1, x_norm))
+        y_norm = max(0, min(1, y_norm))
+
+        # map to screen
+        x = int(x_norm * screen_w)
+        y = int(y_norm * screen_h)
+
+        # smoothing
         x = int(prev_x + (x - prev_x) * smooth)
         y = int(prev_y + (y - prev_y) * smooth)
 
