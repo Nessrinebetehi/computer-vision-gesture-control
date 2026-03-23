@@ -61,7 +61,7 @@ def main():
             gesture_mode = not gesture_mode
             current_gesture = None
             face_gestures.reset_state()
-            hand_gestures.reset_state()
+          
 
             if gesture_mode:
                 print("\n>>> Activating in 3 seconds — click your target window NOW!")
