@@ -167,3 +167,22 @@ def reset_state():
     """Reset the previous nose position. Call when gesture mode is toggled OFF."""
     global _prev_nose
     _prev_nose = None
+
+def get_face_center(frame):
+    h, w = frame.shape[:2]
+    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    mp_im = mp.Image(image_format=mp.ImageFormat.SRGB, data=rgb)
+    result = _detector.detect(mp_im)
+
+    if not result.face_landmarks:
+        return None
+
+    lm = result.face_landmarks[0]
+
+    xs = [p.x for p in lm]
+    ys = [p.y for p in lm]
+
+    cx = int(sum(xs) / len(xs) * w)
+    cy = int(sum(ys) / len(ys) * h)
+
+    return (cx, cy)    

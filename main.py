@@ -77,6 +77,32 @@ def main():
         frame = face_gestures.draw_landmarks(frame)
         frame = hand_gestures.draw_hand_landmarks(frame)
 
+                # ── LABELS POSITIONNÉS ──
+
+        # FACE
+        face_pos = face_gestures.get_face_center(frame)
+        if face_pos:
+            cv2.putText(frame, "FACE",
+                        (face_pos[0] - 40, face_pos[1] - 20),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.8,
+                        (255, 200, 0), 2)
+
+                # HAND
+        if hand_gestures.last_pts:
+            h, w, _ = frame.shape
+
+            for hand in hand_gestures.last_pts:
+                xs = [p[0] for p in hand]
+                ys = [p[1] for p in hand]
+
+                cx = int(sum(xs) / len(xs) * w)
+                cy = int(sum(ys) / len(ys) * h)
+
+                cv2.putText(frame, "HAND",
+                            (cx - 40, cy - 20),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.8,
+                            (0, 255, 255), 2)
+
         # ── Gesture detection — face and hand are INDEPENDENT
         # Face gestures and hand gestures no longer block each other.
         # Both are checked every frame. First one to return a result wins,

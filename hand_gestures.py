@@ -211,3 +211,19 @@ if __name__ == "__main__":
     cap.release()
     cv2.destroyAllWindows()
     detector.close()
+
+def get_hand_center():
+    global last_pts
+
+    if not last_pts:
+        return None
+
+    hand = last_pts[0]  # première main
+
+    xs = [p[0] for p in hand]
+    ys = [p[1] for p in hand]
+
+    cx = int(sum(xs) / len(xs))
+    cy = int(sum(ys) / len(ys))
+
+    return (cx, cy)    
